@@ -1,10 +1,15 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 import io, os
 from pdf2docx import Converter
 from docx import Document
 from reportlab.pdfgen import canvas
 from PIL import Image
-from moviepy.editor import VideoFileClip
+
+# --- Intentar importar MoviePy ---
+try:
+    from moviepy.editor import VideoFileClip
+except Exception:
+    VideoFileClip = None  # Evita error si Render no soporta moviepy
 
 app = Flask(__name__)
 
@@ -71,6 +76,13 @@ def convert():
 
     # --- MP4 → MP3 ---
     elif 'mp4' in conversion_type and 'mp3' in to_extension:
+        if VideoFileClip is None:
+            # Render no soporta moviepy, se devuelve mensaje amigable
+            return jsonify({
+                "error": "Conversión de video no disponible en este entorno.",
+                "detalle": "MoviePy no está instalado en el servidor."
+            }), 501
+
         temp_input = "temp_video.mp4"
         temp_output = "output.mp3"
         with open(temp_input, 'wb') as f:
@@ -87,4 +99,5 @@ def convert():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # Render usa Gunicorn, pero esto sirve localmente
+    app.run(host='0.0.0.0', port=5000, debug=True)
