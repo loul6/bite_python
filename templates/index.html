@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bite Converter</title>
+    <style>
+        /* Estilos generales y de fuente */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Gris oscuro */
+            color: #e5e7eb; /* Gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Contenedor principal de las pantallas */
+        .screen-container {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 0 25px rgba(0, 191, 255, 0.2);
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            text-align: center;
+            max-width: 90%;
+            width: 600px;
+        }
+
+        /* Ocultar todas las pantallas por defecto */
+        .screen { display: none; }
+        /* Mostrar solo la pantalla activa */
+        .screen.active { display: block; }
+
+        /* Títulos y texto */
+        h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+        h2 { font-size: 2.25rem; font-weight: 700; margin-bottom: 2rem; }
+        p { font-size: 1.25rem; margin-bottom: 2rem; color: #d1d5db; }
+        .highlight { color: #22d3ee; /* Cian */ font-weight: bold; }
+
+        /* Estilo para las opciones de conversión */
+        .conversion-option {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(31, 41, 55, 0.5);
+            margin-bottom: 1rem;
+        }
+        .conversion-option.selected {
+            background-color: rgba(59, 130, 246, 0.6); /* Azul */
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            color: white;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 0.75rem 2rem;
+            background-color: #0e7490; /* Cian oscuro */
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn:hover { background-color: #0891b2; /* Cian más claro */ }
+
+        /* Input de archivo oculto */
+        #file-input { display: none; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor para todas las pantallas -->
+    <div class="screen-container">
+
+        <!-- 1. Pantalla de Bienvenida -->
+        <div id="welcome-screen" class="screen active">
+            <h1>Bienvenido a <span class="highlight">Bite</span></h1>
+            <p>Tu convertidor de archivos simple y rápido.</p>
+            <p>Presiona <span class="highlight">Enter</span> para empezar.</p>
+        </div>
+
+        <!-- 2. Pantalla de Selección de Conversión -->
+        <div id="selection-screen" class="screen">
+            <h2>Elige el tipo de conversión</h2>
+            <div id="conversion-options">
+                <!-- Las opciones se generan con JavaScript -->
+            </div>
+            <p class="mt-8">Usa las <span class="highlight">flechas</span> para navegar y <span class="highlight">Enter</span> para confirmar.</p>
+        </div>
+
+        <!-- 3. Pantalla de Carga de Archivo -->
+        <div id="upload-screen" class="screen">
+            <h2 id="upload-title"></h2>
+            <p>Se espera un archivo <span id="expected-extension" class="highlight"></span></p>
+            <p>Archivo: <span id="file-name" class="highlight">Ninguno</span></p>
+            
+            <!-- Formulario para subir el archivo -->
+            <form id="upload-form" action="/convert" method="post" enctype="multipart/form-data">
+                <input type="file" id="file-input" name="file" />
+                <input type="hidden" id="conversion-type-input" name="conversion_type" />
+                <input type="hidden" id="to-extension-input" name="to_extension" />
+            </form>
+
+            <button id="select-file-btn" class="btn">Seleccionar Archivo</button>
+            
+            <p class="mt-6">Presiona <span class="highlight">Enter</span> para {selectedFile ? 'iniciar la conversión' : 'seleccionar un archivo'}.</p>
+            <p class="mt-4">O presiona <span class="highlight">1</span> para volver.</p>
+        </div>
+
+        <!-- 4. Pantalla de Carga/Procesando -->
+        <div id="loading-screen" class="screen">
+            <h2>Procesando...</h2>
+            <p>Tu archivo se está convirtiendo. Por favor, espera.</p>
+        </div>
+
+        <!-- 5. Pantalla de Éxito/Descarga -->
+        <div id="success-screen" class="screen">
+            <h2>¡Conversión Exitosa!</h2>
+            <p>Tu archivo está listo para ser descargado.</p>
+            <p>Presiona <span class="highlight">Enter</span> para descargarlo.</p>
+        </div>
+
+        <!-- 6. Pantalla Final -->
+        <div id="download-screen" class="screen">
+            <h2>Descarga Completa</h2>
+            <p>¡Gracias por usar Bite!</p>
+            <p>Presiona <span class="highlight">1</span> para realizar otra conversión.</p>
+        </div>
+
+    </div>
+
+    <!-- Enlace al archivo JavaScript -->
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Flask
+pdf2docx
+python-docx
+reportlab
+Pillow
+moviepy
