@@ -1,7 +1,8 @@
-Flask
-moviepy
-pdfminer.six
+flask
+pdf2docx
+python-docx
 reportlab
 pillow
+moviepy
 gunicorn
 
