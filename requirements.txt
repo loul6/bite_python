@@ -1,12 +1,7 @@
 Flask
-gunicorn
-pdf2docx
-python-docx
+moviepy
+pdfminer.six
 reportlab
-Pillow
-moviepy==2.1.1
-imageio==2.36.0
-imageio-ffmpeg==0.5.1
-tqdm
-numpy
+pillow
+gunicorn
 
