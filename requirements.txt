@@ -1,8 +1,8 @@
 Flask
+gunicorn
 pdf2docx
 python-docx
 reportlab
 Pillow
-moviepy
-gunicorn
+moviepy==2.1.1
 
